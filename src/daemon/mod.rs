@@ -212,6 +212,7 @@ fn has_supervised_channels(config: &Config) -> bool {
     config.channels_config.telegram.is_some()
         || config.channels_config.discord.is_some()
         || config.channels_config.slack.is_some()
+        || config.channels_config.mattermost.is_some()
         || config.channels_config.imessage.is_some()
         || config.channels_config.matrix.is_some()
         || config.channels_config.signal.is_some()

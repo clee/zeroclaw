@@ -166,6 +166,7 @@ pub fn run_wizard() -> Result<Config> {
     let has_channels = config.channels_config.telegram.is_some()
         || config.channels_config.discord.is_some()
         || config.channels_config.slack.is_some()
+        || config.channels_config.mattermost.is_some()
         || config.channels_config.imessage.is_some()
         || config.channels_config.matrix.is_some()
         || config.channels_config.email.is_some()
@@ -226,6 +227,7 @@ pub fn run_channels_repair_wizard() -> Result<Config> {
     let has_channels = config.channels_config.telegram.is_some()
         || config.channels_config.discord.is_some()
         || config.channels_config.slack.is_some()
+        || config.channels_config.mattermost.is_some()
         || config.channels_config.imessage.is_some()
         || config.channels_config.matrix.is_some()
         || config.channels_config.email.is_some()
@@ -2493,6 +2495,14 @@ fn setup_channels() -> Result<ChannelsConfig> {
                 }
             ),
             format!(
+                "Mattermost  {}",
+                if config.mattermost.is_some() {
+                    "✅ connected"
+                } else {
+                    "— connect your bot"
+                }
+            ),
+            format!(
                 "iMessage   {}",
                 if config.imessage.is_some() {
                     "✅ configured"
@@ -3658,6 +3668,9 @@ fn setup_channels() -> Result<ChannelsConfig> {
     if config.slack.is_some() {
         active.push("Slack");
     }
+    if config.mattermost.is_some() {
+        active.push("Mattermost");
+    }
     if config.imessage.is_some() {
         active.push("iMessage");
     }
@@ -4193,6 +4206,9 @@ fn print_summary(config: &Config) {
     }
     if config.channels_config.slack.is_some() {
         channels.push("Slack");
+    }
+    if config.channels_config.mattermost.is_some() {
+        channels.push("Mattermost");
     }
     if config.channels_config.imessage.is_some() {
         channels.push("iMessage");

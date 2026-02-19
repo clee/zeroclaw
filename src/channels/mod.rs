@@ -1247,6 +1247,7 @@ pub fn handle_command(command: crate::ChannelCommands, config: &Config) -> Resul
                 ("Telegram", config.channels_config.telegram.is_some()),
                 ("Discord", config.channels_config.discord.is_some()),
                 ("Slack", config.channels_config.slack.is_some()),
+                ("Mattermost", config.channels_config.mattermost.is_some()),
                 ("Webhook", config.channels_config.webhook.is_some()),
                 ("iMessage", config.channels_config.imessage.is_some()),
                 ("Matrix", config.channels_config.matrix.is_some()),
@@ -1338,6 +1339,20 @@ pub async fn doctor_channels(config: Config) -> Result<()> {
                 sl.channel_id.clone(),
                 sl.allowed_users.clone(),
             )),
+        ));
+    }
+
+    if let Some(ref mm) = config.channels_config.mattermost {
+        channels.push((
+            "Mattermost",
+            Arc::new(MattermostChannel::new(
+                mm.url.clone(),
+                mm.bot_token.clone(),
+                mm.channel_id.clone(),
+                mm.allowed_users.clone(),
+                mm.thread_replies.unwrap_or(true),
+                mm.mention_only.unwrap_or(false),
+            ))
         ));
     }
 

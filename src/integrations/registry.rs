@@ -46,6 +46,18 @@ pub fn all_integrations() -> Vec<IntegrationEntry> {
             },
         },
         IntegrationEntry {
+            name: "Mattermost",
+            description: "Mattermost via Web API",
+            category: IntegrationCategory::Chat,
+            status_fn: |c| {
+                if c.channels_config.mattermost.is_some() {
+                    IntegrationStatus::Active
+                } else {
+                    IntegrationStatus::Available
+                }
+            },
+        },
+        IntegrationEntry {
             name: "Webhooks",
             description: "HTTP endpoint for triggers",
             category: IntegrationCategory::Chat,
